@@ -3,8 +3,7 @@ import {
   ButtonComponent,
 } from '../../shared/component-kit';
 
-import { shuffle } from '../../shared/utils/shuffle';
-import { createCardDeck } from '../../entities/card/model/cardData';
+import { gameState } from '../../entities/game/model/gameStore';
 
 import styles from './GameBoard.module.css';
 
@@ -18,10 +17,14 @@ export default class GameBoard extends ContainerComponent {
     });
 
     this.render();
+
+    this.unsubscribe = gameState.subscribe(() => {
+      this.render();
+    });
   }
 
   render() {
-    const deck = shuffle(createCardDeck());
+    const { deck } = gameState.getState();
 
     const cards = deck.map((value, index) => {
       return new ButtonComponent({
@@ -37,5 +40,10 @@ export default class GameBoard extends ContainerComponent {
     this.setChildren(cards);
 
     return this;
+  }
+
+  destroy() {
+    this.unsubscribe?.();
+    super.destroy();
   }
 }

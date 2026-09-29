@@ -3,6 +3,10 @@ import {
   ButtonComponent,
   TextComponent,
 } from '../../shared/component-kit';
+
+import { gameState } from '../../entities/game/model/gameStore';
+import { newGame } from '../../entities/game/model/gameActions';
+
 import styles from './GameHeader.module.css';
 
 export default class GameHeader extends ContainerComponent {
@@ -25,6 +29,11 @@ export default class GameHeader extends ContainerComponent {
 
     const newGameButton = new ButtonComponent({
       content: 'New Game',
+      listeners: {
+        click: () => {
+          gameState.dispatch(newGame());
+        },
+      },
     });
 
     const leaderboardButton = new ButtonComponent({
