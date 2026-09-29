@@ -1,6 +1,6 @@
 {
-  "name": "Project Name",
-  "short_name": "Project",
+  "name": "Memory Game",
+  "short_name": "memory-game",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
