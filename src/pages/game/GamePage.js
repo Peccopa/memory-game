@@ -1,5 +1,6 @@
 import { ContainerComponent, TextComponent } from '../../shared/component-kit';
 import GameHeader from '../../widgets/game-header/GameHeader';
+import GameBoard from '../../widgets/game-board/GameBoard';
 
 export default class GamePage extends ContainerComponent {
   constructor({ ...rest } = {}) {
@@ -29,10 +30,7 @@ export default class GamePage extends ContainerComponent {
       children: [moves, pairs],
     });
 
-    const board = new ContainerComponent({
-      tag: 'section',
-      id: 'game-board',
-    });
+    const board = new GameBoard();
 
     const main = new ContainerComponent({
       tag: 'main',
