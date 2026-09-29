@@ -37,7 +37,7 @@
     ]
   },
   "validate-branch-name": {
-    "pattern": "^(main|(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|experiment)/([0-9]+-)?[a-z0-9-]+)$",
+    "pattern": "^(memory-game|main|(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|experiment)/([0-9]+-)?[a-z0-9-]+)$",
     "errorMsg": "Branch name must follow pattern: <type>/<issue-number>-<description> or <type>/<description>. Example: feat/add-login-form or feat/117-add-login-form"
   }
 }
