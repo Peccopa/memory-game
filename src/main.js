@@ -8,14 +8,17 @@ import { Router } from './shared/router-kit';
 
 // === Router Kit ===
 
-const router = new Router({
-  '/': {
-    name: 'home',
+const router = new Router(
+  {
+    '/': {
+      name: 'home',
+    },
+    '/about': {
+      name: 'about',
+    },
   },
-  '/about': {
-    name: 'about',
-  },
-});
+  '/memory-game',
+);
 
 router.subscribe(({ route }) => {
   if (route?.name === 'home') {
