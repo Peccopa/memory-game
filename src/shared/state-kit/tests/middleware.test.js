@@ -1,0 +1,70 @@
+import { describe, it, expect, vi } from 'vitest';
+import StateKit from '..';
+
+function incrementReducer(state, action) {
+  if (action.type === 'INCREMENT') return { ...state, count: state.count + 1 };
+  return state;
+}
+
+const middlewareModify = async ({ action, next }) => {
+  let nextAction = action;
+  if (action.type === 'INCREMENT') nextAction = { type: 'UNKNOWN' };
+  await next(nextAction);
+};
+
+const middlewareEmpty = async () => {};
+
+describe('StateKit - middleware', () => {
+  it('should call middleware on dispatch', async () => {
+    const stateKit = new StateKit({ count: 0 });
+    const middlewareFunction = vi.fn(
+      async ({ next, action }) => await next(action),
+    );
+    stateKit.addMiddleware(middlewareFunction);
+    stateKit.addReducer(incrementReducer);
+    await stateKit.dispatch({ type: 'INCREMENT' });
+    expect(middlewareFunction).toHaveBeenCalled();
+  });
+
+  it('should allow middleware to modify action', async () => {
+    const stateKit = new StateKit({ count: 0 });
+    stateKit.addMiddleware(middlewareModify);
+    stateKit.addReducer(incrementReducer);
+    await stateKit.dispatch({ type: 'INCREMENT' });
+    expect(stateKit.getState().count).toBe(0);
+  });
+
+  it('should stop pipeline if middleware does not call next', async () => {
+    const stateKit = new StateKit({ count: 0 });
+    stateKit.addMiddleware(middlewareEmpty);
+    stateKit.addReducer(incrementReducer);
+    await stateKit.dispatch({ type: 'INCREMENT' });
+    expect(stateKit.getState().count).toBe(0);
+  });
+});
+
+describe('StateKit - middleware', () => {
+  it('should execute middleware in correct order', async () => {
+    const calls = [];
+    const mw1 = async ({ next }) => {
+      calls.push('mw1-before');
+      await next({ type: 'INCREMENT' });
+      calls.push('mw1-after');
+    };
+    const mw2 = async ({ next }) => {
+      calls.push('mw2-before');
+      await next({ type: 'INCREMENT' });
+      calls.push('mw2-after');
+    };
+    const stateKit = new StateKit({ count: 0 });
+    stateKit.addMiddleware(mw1, mw2);
+    stateKit.addReducer(incrementReducer);
+    await stateKit.dispatch({ type: 'INCREMENT' });
+    expect(calls).toEqual([
+      'mw1-before',
+      'mw2-before',
+      'mw2-after',
+      'mw1-after',
+    ]);
+  });
+});
