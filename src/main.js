@@ -1,8 +1,5 @@
-import { TextComponent } from './shared/component-kit';
+import App from './app/App';
 
-const title = new TextComponent({
-  tag: 'h1',
-  content: 'Memory Game',
-});
+const app = new App();
 
-document.body.replaceChildren(title.element);
+document.body.replaceChildren(app.element);
