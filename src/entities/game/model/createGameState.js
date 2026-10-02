@@ -9,4 +9,6 @@ export const createGameState = () => ({
   secondCard: null,
   matchedCards: [],
   isLocked: false,
+  isGameOver: false,
+  isModalOpen: false,
 });

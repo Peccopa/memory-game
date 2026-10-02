@@ -38,7 +38,7 @@ export default class GameBoard extends ContainerComponent {
           index === secondCard ||
           matchedCards.includes(index)
             ? String(value)
-            : '?',
+            : `[${value}]`,
         attributes: {
           'data-card-index': String(index),
           'data-card-value': String(value),

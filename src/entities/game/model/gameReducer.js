@@ -1,4 +1,10 @@
-import { NEW_GAME, OPEN_CARD, CLOSE_MISMATCH } from './gameActions';
+import {
+  NEW_GAME,
+  OPEN_CARD,
+  CLOSE_MISMATCH,
+  CLOSE_MODAL,
+} from './gameActions';
+import { PAIR_COUNT } from '../../../shared/config/game';
 import { createGameState } from './createGameState';
 
 export const gameReducer = (state, action) => {
@@ -23,17 +29,21 @@ export const gameReducer = (state, action) => {
       if (state.secondCard === null) {
         const secondCard = index;
         const isMatch = state.deck[state.firstCard] === state.deck[secondCard];
+        const pairs = isMatch ? state.pairs + 1 : state.pairs;
+        const isGameOver = pairs === PAIR_COUNT;
 
         return {
           ...state,
           firstCard: isMatch ? null : state.firstCard,
           secondCard: isMatch ? null : secondCard,
           moves: state.moves + 1,
-          pairs: isMatch ? state.pairs + 1 : state.pairs,
+          pairs,
+          isGameOver,
           matchedCards: isMatch
             ? [...state.matchedCards, state.firstCard, secondCard]
             : state.matchedCards,
           isLocked: !isMatch,
+          isModalOpen: isGameOver,
         };
       }
 
@@ -46,6 +56,12 @@ export const gameReducer = (state, action) => {
         firstCard: null,
         secondCard: null,
         isLocked: false,
+      };
+
+    case CLOSE_MODAL:
+      return {
+        ...state,
+        isModalOpen: false,
       };
 
     default:
