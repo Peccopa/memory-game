@@ -17,6 +17,14 @@ export default class GameModal extends ContainerComponent {
 
     this.render();
 
+    this.handleBackdropClick = (event) => {
+      if (event.target === this.element) {
+        gameState.dispatch(closeModal());
+      }
+    };
+
+    this.element.addEventListener('click', this.handleBackdropClick);
+
     this.handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         gameState.dispatch(closeModal());
@@ -66,6 +74,7 @@ export default class GameModal extends ContainerComponent {
   }
 
   destroy() {
+    this.element.removeEventListener('click', this.handleBackdropClick);
     document.removeEventListener('keydown', this.handleKeyDown);
     super.destroy();
   }

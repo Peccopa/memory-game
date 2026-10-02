@@ -22,6 +22,14 @@ export default class LeaderboardModal extends ContainerComponent {
 
     this.render();
 
+    this.handleBackdropClick = (event) => {
+      if (event.target === this.element) {
+        gameState.dispatch(closeLeaderboard());
+      }
+    };
+
+    this.element.addEventListener('click', this.handleBackdropClick);
+
     this.handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         gameState.dispatch(closeLeaderboard());
@@ -60,6 +68,7 @@ export default class LeaderboardModal extends ContainerComponent {
   }
 
   destroy() {
+    this.element.removeEventListener('click', this.handleBackdropClick);
     document.removeEventListener('keydown', this.handleKeyDown);
     super.destroy();
   }
