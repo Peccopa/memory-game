@@ -1,6 +1,7 @@
-import { ContainerComponent, TextComponent } from '../../shared/component-kit';
+import { ContainerComponent } from '../../shared/component-kit';
 import GameHeader from '../../widgets/game-header/GameHeader';
 import GameBoard from '../../widgets/game-board/GameBoard';
+import GameCounters from '../../widgets/game-counters/GameCounters';
 
 export default class GamePage extends ContainerComponent {
   constructor({ ...rest } = {}) {
@@ -16,19 +17,7 @@ export default class GamePage extends ContainerComponent {
   render() {
     const header = new GameHeader();
 
-    const moves = new TextComponent({
-      content: 'Moves: 0',
-    });
-
-    const pairs = new TextComponent({
-      content: 'Pairs: 0 / 8',
-    });
-
-    const counters = new ContainerComponent({
-      tag: 'section',
-      id: 'game-counters',
-      children: [moves, pairs],
-    });
+    const counters = new GameCounters();
 
     const board = new GameBoard();
 
