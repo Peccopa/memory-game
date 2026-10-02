@@ -33,12 +33,16 @@ export default class GamePage extends ContainerComponent {
         this.resultSaved = true;
       }
 
+      this.scrollPosition = 0;
+
       this.render();
     });
   }
 
   render() {
     const { isModalOpen, isLeaderboardOpen } = gameState.getState();
+
+    this.updateBodyScroll(isModalOpen, isLeaderboardOpen);
 
     const header = new GameHeader();
     const counters = new GameCounters();
@@ -64,7 +68,22 @@ export default class GamePage extends ContainerComponent {
     return this;
   }
 
+  updateBodyScroll(isModalOpen, isLeaderboardOpen) {
+    const isModalOpenNow = isModalOpen || isLeaderboardOpen;
+
+    if (isModalOpenNow && document.body.style.overflow !== 'hidden') {
+      this.scrollPosition = window.scrollY;
+      document.body.style.overflow = 'hidden';
+    }
+
+    if (!isModalOpenNow && document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+      window.scrollTo(0, this.scrollPosition);
+    }
+  }
+
   destroy() {
+    document.body.style.overflow = '';
     this.unsubscribe?.();
     super.destroy();
   }
