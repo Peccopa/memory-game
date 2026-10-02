@@ -3,7 +3,10 @@ import {
   ButtonComponent,
   TextComponent,
 } from '../../shared/component-kit';
-import { getLeaderboard } from '../../entities/leaderboard/model/leaderboard';
+import {
+  getLeaderboard,
+  formatDate,
+} from '../../entities/leaderboard/model/leaderboard';
 import { closeLeaderboard } from '../../entities/game/model/gameActions';
 import { gameState } from '../../entities/game/model/gameStore';
 
@@ -30,7 +33,7 @@ export default class LeaderboardModal extends ContainerComponent {
 
     const entries = leaderboard.map((result, index) => {
       return new TextComponent({
-        content: `${index + 1}. ${result.moves} moves — ${result.date}`,
+        content: `${index + 1}. ${result.moves} moves — ${formatDate(result.date)}`,
       });
     });
 

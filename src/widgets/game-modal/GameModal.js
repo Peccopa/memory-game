@@ -16,6 +16,14 @@ export default class GameModal extends ContainerComponent {
     });
 
     this.render();
+
+    this.handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        gameState.dispatch(closeModal());
+      }
+    };
+
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   render() {
@@ -55,5 +63,10 @@ export default class GameModal extends ContainerComponent {
     this.setChildren([content]);
 
     return this;
+  }
+
+  destroy() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+    super.destroy();
   }
 }
