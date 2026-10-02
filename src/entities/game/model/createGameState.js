@@ -11,4 +11,5 @@ export const createGameState = () => ({
   isLocked: false,
   isGameOver: false,
   isModalOpen: false,
+  isLeaderboardOpen: false,
 });

@@ -4,8 +4,13 @@ import {
   TextComponent,
 } from '../../shared/component-kit';
 
+// import LeaderboardModal from '../leaderboard-modal/LeaderboardModal';
+
 import { gameState } from '../../entities/game/model/gameStore';
-import { newGame } from '../../entities/game/model/gameActions';
+import {
+  newGame,
+  openLeaderboard,
+} from '../../entities/game/model/gameActions';
 
 import styles from './GameHeader.module.css';
 
@@ -38,6 +43,11 @@ export default class GameHeader extends ContainerComponent {
 
     const leaderboardButton = new ButtonComponent({
       content: 'Leaderboard',
+      listeners: {
+        click: () => {
+          gameState.dispatch(openLeaderboard());
+        },
+      },
     });
 
     this.setChildren([title, newGameButton, leaderboardButton]);

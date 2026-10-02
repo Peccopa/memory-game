@@ -3,6 +3,8 @@ import {
   OPEN_CARD,
   CLOSE_MISMATCH,
   CLOSE_MODAL,
+  OPEN_LEADERBOARD,
+  CLOSE_LEADERBOARD,
 } from './gameActions';
 import { PAIR_COUNT } from '../../../shared/config/game';
 import { createGameState } from './createGameState';
@@ -62,6 +64,18 @@ export const gameReducer = (state, action) => {
       return {
         ...state,
         isModalOpen: false,
+      };
+
+    case OPEN_LEADERBOARD:
+      return {
+        ...state,
+        isLeaderboardOpen: true,
+      };
+
+    case CLOSE_LEADERBOARD:
+      return {
+        ...state,
+        isLeaderboardOpen: false,
       };
 
     default:
