@@ -47,10 +47,50 @@ export default class LeaderboardModal extends ContainerComponent {
       content: 'Leaderboard',
     });
 
-    const entries = leaderboard.map((result, index) => {
-      return new TextComponent({
-        content: `${index + 1}. ${result.moves} moves — ${formatDate(result.date)}`,
+    const table = new ContainerComponent({
+      tag: 'table',
+    });
+
+    const headerRow = new ContainerComponent({
+      tag: 'tr',
+      children: [
+        new TextComponent({
+          tag: 'th',
+          content: 'Place',
+        }),
+        new TextComponent({
+          tag: 'th',
+          content: 'Moves',
+        }),
+        new TextComponent({
+          tag: 'th',
+          content: 'Date',
+        }),
+      ],
+    });
+
+    table.appendChildren(headerRow);
+
+    leaderboard.forEach((result, index) => {
+      const row = new ContainerComponent({
+        tag: 'tr',
+        children: [
+          new TextComponent({
+            tag: 'td',
+            content: String(index + 1),
+          }),
+          new TextComponent({
+            tag: 'td',
+            content: String(result.moves),
+          }),
+          new TextComponent({
+            tag: 'td',
+            content: formatDate(result.date),
+          }),
+        ],
       });
+
+      table.appendChildren(row);
     });
 
     const closeButton = new ButtonComponent({
@@ -62,7 +102,7 @@ export default class LeaderboardModal extends ContainerComponent {
       },
     });
 
-    this.setChildren([title, ...entries, closeButton]);
+    this.setChildren([title, table, closeButton]);
 
     return this;
   }
