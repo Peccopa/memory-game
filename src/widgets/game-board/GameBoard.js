@@ -39,7 +39,7 @@ export default class GameBoard extends ContainerComponent {
 
     const cards = deck.map((value, index) => {
       return new ButtonComponent({
-        disabled: isModalOpen || isLeaderboardOpen,
+        disabled: isLocked || isModalOpen || isLeaderboardOpen,
         classes: styles.card,
         content:
           index === firstCard ||
