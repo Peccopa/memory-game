@@ -1,4 +1,4 @@
-import { NEW_GAME, OPEN_CARD } from './gameActions';
+import { NEW_GAME, OPEN_CARD, CLOSE_MISMATCH } from './gameActions';
 import { createGameState } from './createGameState';
 
 export const gameReducer = (state, action) => {
@@ -8,6 +8,10 @@ export const gameReducer = (state, action) => {
 
     case OPEN_CARD: {
       const { index } = action.payload;
+
+      if (state.isLocked || state.matchedCards.includes(index)) {
+        return state;
+      }
 
       if (state.firstCard === null) {
         return {
@@ -29,11 +33,20 @@ export const gameReducer = (state, action) => {
           matchedCards: isMatch
             ? [...state.matchedCards, state.firstCard, secondCard]
             : state.matchedCards,
+          isLocked: !isMatch,
         };
       }
 
       return state;
     }
+
+    case CLOSE_MISMATCH:
+      return {
+        ...state,
+        firstCard: null,
+        secondCard: null,
+        isLocked: false,
+      };
 
     default:
       return state;
