@@ -22,7 +22,8 @@ export const gameReducer = (state, action) => {
 
         return {
           ...state,
-          secondCard,
+          firstCard: isMatch ? null : state.firstCard,
+          secondCard: isMatch ? null : secondCard,
           moves: state.moves + 1,
           pairs: isMatch ? state.pairs + 1 : state.pairs,
           matchedCards: isMatch

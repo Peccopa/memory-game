@@ -23,13 +23,17 @@ export default class GameBoard extends ContainerComponent {
   }
 
   render() {
-    const { deck, firstCard, secondCard } = gameState.getState();
+    const { deck, firstCard, secondCard, matchedCards } = gameState.getState();
 
     const cards = deck.map((value, index) => {
       return new ButtonComponent({
         classes: styles.card,
         content:
-          index === firstCard || index === secondCard ? String(value) : '?',
+          index === firstCard ||
+          index === secondCard ||
+          matchedCards.includes(index)
+            ? String(value)
+            : '?',
         attributes: {
           'data-card-index': String(index),
           'data-card-value': String(value),
