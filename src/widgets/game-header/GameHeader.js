@@ -27,6 +27,8 @@ export default class GameHeader extends ContainerComponent {
   }
 
   render() {
+    const { isModalOpen, isLeaderboardOpen } = gameState.getState();
+
     const title = new TextComponent({
       tag: 'h1',
       content: 'Memory Game',
@@ -34,6 +36,7 @@ export default class GameHeader extends ContainerComponent {
 
     const newGameButton = new ButtonComponent({
       content: 'New Game',
+      disabled: isLeaderboardOpen,
       listeners: {
         click: () => {
           gameState.dispatch(newGame());
@@ -42,6 +45,7 @@ export default class GameHeader extends ContainerComponent {
     });
 
     const leaderboardButton = new ButtonComponent({
+      disabled: isModalOpen || isLeaderboardOpen,
       content: 'Leaderboard',
       listeners: {
         click: () => {

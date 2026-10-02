@@ -27,11 +27,19 @@ export default class GameBoard extends ContainerComponent {
   }
 
   render() {
-    const { deck, firstCard, secondCard, matchedCards, isLocked } =
-      gameState.getState();
+    const {
+      deck,
+      firstCard,
+      secondCard,
+      matchedCards,
+      isLocked,
+      isModalOpen,
+      isLeaderboardOpen,
+    } = gameState.getState();
 
     const cards = deck.map((value, index) => {
       return new ButtonComponent({
+        disabled: isModalOpen || isLeaderboardOpen,
         classes: styles.card,
         content:
           index === firstCard ||
@@ -46,7 +54,6 @@ export default class GameBoard extends ContainerComponent {
         listeners: {
           click: () => {
             gameState.dispatch(openCard(index));
-            console.log(gameState.getState());
           },
         },
       });

@@ -21,6 +21,10 @@ export const gameReducer = (state, action) => {
         return state;
       }
 
+      if (state.firstCard === index) {
+        return state;
+      }
+
       if (state.firstCard === null) {
         return {
           ...state,
