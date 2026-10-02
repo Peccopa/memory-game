@@ -7,5 +7,6 @@ export const createGameState = () => ({
   pairs: 0,
   firstCard: null,
   secondCard: null,
+  matchedCards: [],
   isLocked: false,
 });

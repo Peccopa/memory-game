@@ -2,9 +2,8 @@ import {
   ContainerComponent,
   ButtonComponent,
 } from '../../shared/component-kit';
-
 import { gameState } from '../../entities/game/model/gameStore';
-
+import { openCard } from '../../entities/game/model/gameActions';
 import styles from './GameBoard.module.css';
 
 export default class GameBoard extends ContainerComponent {
@@ -24,15 +23,22 @@ export default class GameBoard extends ContainerComponent {
   }
 
   render() {
-    const { deck } = gameState.getState();
+    const { deck, firstCard, secondCard } = gameState.getState();
 
     const cards = deck.map((value, index) => {
       return new ButtonComponent({
         classes: styles.card,
-        content: '?',
+        content:
+          index === firstCard || index === secondCard ? String(value) : '?',
         attributes: {
           'data-card-index': String(index),
           'data-card-value': String(value),
+        },
+        listeners: {
+          click: () => {
+            gameState.dispatch(openCard(index));
+            console.log(gameState.getState());
+          },
         },
       });
     });
