@@ -21,6 +21,14 @@ export default class LeaderboardModal extends ContainerComponent {
     });
 
     this.render();
+
+    this.handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        gameState.dispatch(closeLeaderboard());
+      }
+    };
+
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   render() {
@@ -49,5 +57,10 @@ export default class LeaderboardModal extends ContainerComponent {
     this.setChildren([title, ...entries, closeButton]);
 
     return this;
+  }
+
+  destroy() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+    super.destroy();
   }
 }
