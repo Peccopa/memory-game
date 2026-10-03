@@ -1,11 +1,87 @@
 .leaderboard-modal {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  background: rgb(0 0 0 / 50%);
+  gap: 20px;
+  padding: 24px;
+  background: rgb(0 0 0 / 65%);
+}
+
+.leaderboard-modal h2 {
+  margin: 0;
+  color: #f5e6c8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.leaderboard-modal table {
+  width: min(560px, 100%);
+  border: 2px solid #f5e6c8;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0b4d32;
+  color: #f5e6c8;
+  box-shadow:
+    0 16px 40px rgb(0 0 0 / 40%),
+    inset 0 0 0 1px rgb(255 255 255 / 8%);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.leaderboard-modal th,
+.leaderboard-modal td {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgb(245 230 200 / 20%);
+  text-align: center;
+}
+
+.leaderboard-modal th {
+  background: rgb(0 0 0 / 15%);
+  color: #f5e6c8;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.leaderboard-modal td {
+  color: #f7f1df;
+  font-size: 1rem;
+}
+
+.leaderboard-modal tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaderboard-modal button {
+  min-height: 42px;
+  padding: 8px 22px;
+  border: 1px solid #f5e6c8;
+  border-radius: 6px;
+  /* background: transparent; */
+  background: #0b4d32;
+  color: #f5e6c8;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.leaderboard-modal button:hover {
+  background: #0b4d32c1;
+  /* background: rgb(0 0 0 / 20%); */
+  transform: translateY(-2px);
+}
+
+.leaderboard-modal button:active {
+  transform: translateY(1px);
 }

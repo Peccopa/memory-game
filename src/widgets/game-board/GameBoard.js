@@ -10,6 +10,8 @@ import { MISMATCH_TIMER_DELAY } from '../../shared/config/game';
 
 import { getCardView } from '../../entities/card/model/cardView';
 
+let hintShown = false;
+
 export default class GameBoard extends ContainerComponent {
   constructor({ ...rest } = {}) {
     super({
@@ -26,6 +28,29 @@ export default class GameBoard extends ContainerComponent {
     this.unsubscribe = gameState.subscribe(() => {
       this.render();
     });
+
+    if (!hintShown) {
+      const cards = gameState.getState().deck.map((value) => {
+        const { suit, rank } = getCardView(value);
+        return `[${rank}${suit}]`;
+      });
+
+      const hint = cards
+        .reduce((rows, card, index) => {
+          if (index % 4 === 0) {
+            rows.push([]);
+          }
+
+          rows[rows.length - 1].push(card);
+          return rows;
+        }, [])
+        .map((row) => row.join(' '))
+        .join('\n');
+
+      console.log(`🃏 Card hint:\n${hint}`);
+
+      hintShown = true;
+    }
   }
 
   render() {
