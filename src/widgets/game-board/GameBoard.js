@@ -8,6 +8,8 @@ import { openCard, closeMismatch } from '../../entities/game/model/gameActions';
 import styles from './GameBoard.module.css';
 import { MISMATCH_TIMER_DELAY } from '../../shared/config/game';
 
+import { getCardView } from '../../entities/card/model/cardView';
+
 export default class GameBoard extends ContainerComponent {
   constructor({ ...rest } = {}) {
     super({
@@ -38,15 +40,27 @@ export default class GameBoard extends ContainerComponent {
     } = gameState.getState();
 
     const cards = deck.map((value, index) => {
+      const { suit, rank } = getCardView(value);
+
+      const isRedSuit = suit === '♥' || suit === '♦';
+
       return new ButtonComponent({
         disabled: isLocked || isModalOpen || isLeaderboardOpen,
-        classes: styles.card,
+        classes: [
+          styles.card,
+          index === firstCard ||
+          index === secondCard ||
+          matchedCards.includes(index)
+            ? styles.open
+            : styles.closed,
+          isRedSuit && styles.red,
+        ],
         content:
           index === firstCard ||
           index === secondCard ||
           matchedCards.includes(index)
-            ? String(value)
-            : `[${value}]`,
+            ? `${rank} ${suit}`
+            : '',
         attributes: {
           'data-card-index': String(index),
           'data-card-value': String(value),

@@ -1,0 +1,16 @@
+.game-counters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.counter {
+  margin: 0;
+  color: #f5e6c8;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}

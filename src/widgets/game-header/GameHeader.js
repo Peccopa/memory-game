@@ -4,7 +4,7 @@ import {
   TextComponent,
 } from '../../shared/component-kit';
 
-// import LeaderboardModal from '../leaderboard-modal/LeaderboardModal';
+import GameCounters from '../game-counters/GameCounters';
 
 import { gameState } from '../../entities/game/model/gameStore';
 import {
@@ -34,6 +34,8 @@ export default class GameHeader extends ContainerComponent {
       content: 'Memory Game',
     });
 
+    const counters = new GameCounters();
+
     const newGameButton = new ButtonComponent({
       content: 'New Game',
       disabled: isLeaderboardOpen,
@@ -54,7 +56,7 @@ export default class GameHeader extends ContainerComponent {
       },
     });
 
-    this.setChildren([title, newGameButton, leaderboardButton]);
+    this.setChildren([title, counters, newGameButton, leaderboardButton]);
 
     return this;
   }

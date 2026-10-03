@@ -1,0 +1,12 @@
+.game-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: radial-gradient(
+    circle at center,
+    #146b45 0%,
+    #0b4d32 55%,
+    #063522 100%
+  );
+  color: #f5e6c8;
+  font-family: Georgia, 'Times New Roman', serif;
+}
